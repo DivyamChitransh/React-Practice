@@ -378,22 +378,395 @@ E-commerce Application
 - The updated UI is shown to the user.
 - This is the central idea behind React's reactive behaviour.
 
----
-
-## Day 1 Summary
-
-- React is used for building user interfaces.
-- JSX helps write UI inside JavaScript.
-- Components divide the UI into reusable blocks.
-- Props pass data from parent to child.
 
 ---
 
-## Day 2 Summary
+# 37. What is useEffect?
 
-- Events handle user actions.
-- State stores changing data inside a component.
-- useState creates state in functional components.
-- When state changes, React updates the UI automatically.
+`useEffect` is a React Hook used to perform side effects in a component.
+
+### Simple Definition
+
+> useEffect allows us to perform some work after the component renders.
+
+### Common Uses
+
+useEffect can be used for:
+
+- API calls
+- Timers
+- Event listeners
+- Updating document title
+- Working with browser APIs
+- LocalStorage operations
+
+
+---
+
+# 38. Why do we need useEffect?
+
+Suppose we want to call an API when our component loads.
+We don't want to call the API manually every time.
+We want:
+
+Component loads
+↓
+API call automatically
+For this type of work, we can use `useEffect`.
+
+---
+
+# 39. Import useEffect
+
+```jsx
+import { useEffect } from "react";
+```
+---
+
+# 40. Basic useEffect Syntax
+
+```jsx
+useEffect(() => {
+	// code
+});
+```
+
+Example:
+```jsx
+import { useEffect } from "react";
+function App() {
+	useEffect(() => {
+		console.log("Component rendered");
+	});
+	return <h1>Hello React</h1>;
+}
+export default App;
+```
+
+---
+
+# 41. Dependency Array
+
+The second argument of `useEffect` is called the dependency array.
+```jsx
+useEffect(() => {
+	// code
+}, []);
+```
+Example:
+```jsx
+useEffect(() => {
+	console.log("Component loaded");
+}, []);
+```
+An empty dependency array means the effect runs after the initial render.
+
+---
+
+# 42. useEffect with State
+
+We can use state values as dependencies.
+```jsx
+import { useEffect, useState } from "react";
+function App() {
+	const [count, setCount] = useState(0);
+	useEffect(() => {console.log("Count changed")}, [count]);
+	return (
+		<div>
+			<h2>{count}</h2>
+			<button onClick={() => setCount(count + 1)}>
+				Increase
+			</button>
+		</div>
+	);
+}
+export default App;
+```
+
+Here:
+```jsx
+[count]
+```
+means the effect runs when `count` changes.
+
+---
+
+# 43. Different useEffect Examples
+
+### Without dependency array
+```jsx
+useEffect(() => {
+	console.log("Runs after render");
+});
+```
+### Empty dependency array
+```jsx
+useEffect(() => {
+	console.log("Runs after initial render");
+}, []);
+```
+### With dependency
+```jsx
+useEffect(() => {
+	console.log("Runs when count changes");
+}, [count]);
+```
+---
+# 44. What is an API?
+
+API stands for:
+> Application Programming Interface
+In simple terms:
+> API allows different applications to communicate with each other.
+
+For example:
+
+```text
+React Application
+				↓
+			 API
+				↓
+			Server
+				↓
+		Database
+```
+
+The server sends data back to React.
+
+---
+# 45. Request and Response
+
+When React asks the server for data:
+```text
+React
+	↓ Request
+Server
+	↓ Response
+React
+```
+
+Example:
+```text
+GET /users
+```
+---
+
+# 46. What is Fetch?
+
+Fetch is a built-in JavaScript API used to make HTTP requests.
+Fetch returns a Promise.
+
+---
+
+# 47. Fetch inside useEffect
+
+If we want to call the API when the component loads:
+
+```jsx
+import { useEffect } from "react";
+function App() {
+	useEffect(() => {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			});
+	}, []);
+	return <h1>Users</h1>;
+}
+
+export default App;
+```
+The flow is:
+
+```text
+Component loads
+	↓
+useEffect runs
+	↓
+fetch()
+	↓
+API request
+	↓
+Response
+	↓
+Data
+```
+
+---
+
+# 48. Store API Data in State
+We normally store API data in state.
+
+```jsx
+import { useEffect, useState } from "react";
+function App() {
+	const [users, setUsers] = useState([]);
+	useEffect(() => {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => response.json())
+			.then((data) => {
+				setUsers(data);
+			});
+	}, []);
+	return <h1>Users</h1>;
+}
+
+export default App;
+```
+Initially:
+```jsx
+users = []
+```
+After API response:
+```jsx
+setUsers(data);
+```
+
+Now the state contains the API data.
+
+---
+
+# 49. Display API Data using map()
+
+Suppose we have:
+```jsx
+const users = [
+{
+		id: 1,
+		name: "Rahul"
+	},
+	{
+		id: 2,
+		name: "Aman"
+	}
+];
+```
+
+We can display users using `map()`.
+
+```jsx
+{users.map((user) => (
+	<div key={user.id}>
+		<h2>{user.name}</h2>
+	</div>
+))}
+```
+`map()` creates UI for every item in the array.
+
+---
+
+# 50. Why do we use key?
+
+When rendering a list in React, every item should have a unique `key`.
+Usually we use the unique `id` from the data.
+```jsx
+key={user.id}
+```
+The key helps React identify list items.
+
+---
+
+# 51. Loading State
+
+API response can take some time.
+We can show a loading message.
+
+```jsx
+const [loading, setLoading] = useState(true);
+```
+After API response:
+
+```jsx
+setLoading(false);
+```
+---
+
+# 52. Error Handling
+
+We can maintain an error state.
+```jsx
+const [error, setError] = useState("");
+```
+---
+
+# 53. What is Axios?
+
+Axios is a JavaScript library used to make HTTP requests.
+We need to install it.
+
+```bash
+npm install axios
+```
+
+Import:
+```jsx
+import axios from "axios";
+```
+
+---
+
+# 54. Axios GET Request
+
+```jsx
+axios
+	.get("https://jsonplaceholder.typicode.com/users")
+	.then((response) => {
+		console.log(response.data);
+	});
+```
+With Axios, the response data is available through:
+
+```jsx
+response.data
+```
+
+---
+
+# 55. Axios with useEffect
+
+```jsx
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+function App() {
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		axios
+			.get("https://jsonplaceholder.typicode.com/users")
+			.then((response) => {
+				setUsers(response.data);
+			});
+	}, []);
+
+	return (
+		<div>
+			<h1>Users</h1>
+			{users.map((user) => (
+				<div key={user.id}>
+					<h2>{user.name}</h2>
+					<p>{user.email}</p>
+				</div>
+			))}
+		</div>
+	);
+}
+
+export default App;
+```
+
+---
+
+# 56. Difference Between Fetch and Axios
+
+| Difference | Fetch | Axios |
+|---|---|---|
+| Type | Built into the browser | External library |
+| Installation | No installation required | Requires installation using `npm install axios` |
+| GET request | `fetch(url)` | `axios.get(url)` |
+| Convert response | Need `response.json()` | Data is available in `response.data` |
+| Error handling | HTTP errors need to be checked manually | HTTP errors are automatically rejected |
+| Syntax | Uses Promise-based syntax | Uses Promise-based syntax |
 
 ---
