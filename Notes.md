@@ -1,8 +1,8 @@
-# React Notes — Day 1 & Day 2
+# React Notes
 
 ---
 
-# Day 1 — Introduction to React
+# Introduction to React
 
 ## 1. What is React?
 
