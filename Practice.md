@@ -521,7 +521,346 @@ Display the converted value.
 
 ---
 
-# 35. Practice — Small To-Do App
+# 35. Practice — Counter + useEffect
+
+Create a counter:
+
+```text
+Count: 0 [Increase]
+```
+
+Use:
+
+- useState
+- useEffect
+
+Whenever the count changes, print:
+
+```text
+Count changed
+```
+
+in the console.
+
+---
+
+# 36. Practice — Fetch Users
+
+Use this API:
+
+```text
+https://jsonplaceholder.typicode.com/users
+```
+
+Fetch the users using `fetch()`.
+
+Display:
+
+```text
+Users
+Leanne Graham
+Ervin Howell
+Clementine Bauch
+...
+```
+
+---
+
+# 37. Practice — User Details
+
+Using the same API, display:
+
+```text
+Name
+Email
+City
+```
+
+Example:
+
+```text
+Name: Leanne Graham
+Email: Sincere@april.biz
+City: Gwenborough
+```
+
+---
+
+# 38. Practice — Loading State
+
+Modify the Users API project.
+
+While the API request is running, display:
+
+```text
+Loading...
+```
+
+After the data is received, display the users.
+
+---
+
+# 39. Practice — Error Handling
+
+Add an error state.
+
+If the API request fails, display:
+
+```text
+Something went wrong
+```
+
+Try changing the API URL to an incorrect URL and test your error handling.
+
+---
+
+# 40. Practice — Axios
+
+Install Axios:
+
+```bash
+npm install axios
+```
+
+Use Axios to fetch:
+
+```text
+https://jsonplaceholder.typicode.com/users
+```
+
+Display:
+
+```text
+Name
+Email
+City
+```
+
+---
+
+# 41. Practice — Posts API
+
+Use:
+
+```text
+https://jsonplaceholder.typicode.com/posts
+```
+
+Display:
+
+```text
+Post Title
+Post Body
+```
+
+Use:
+
+- useEffect
+- useState
+- Axios or Fetch
+- map()
+- key
+
+---
+
+# 42. Practice — User List
+
+Create a component that displays all users in cards.
+
+Each card should contain:
+
+```text
+-------------------------
+Name
+Email
+Phone
+Website
+-------------------------
+```
+
+API:
+
+```text
+https://jsonplaceholder.typicode.com/users
+```
+
+---
+
+# 43. Practice — Product API
+
+Use this API:
+
+```text
+https://fakestoreapi.com/products
+```
+
+Display:
+
+```text
+Product Title
+Price
+Category
+Image
+```
+
+Create a separate component:
+
+```text
+ProductCard
+```
+
+Pass product information using props.
+
+---
+
+# 44. Practice — Loading + Error + Products
+
+Using the Fake Store API:
+
+```text
+https://fakestoreapi.com/products
+```
+
+Implement:
+
+- Loading state
+- Error state
+- API data
+- Product cards
+- map()
+- key
+
+Expected flow:
+
+```text
+Loading...
+	↓
+API Request
+	↓
+Success
+	↓
+Products
+```
+
+If API fails:
+
+```text
+Something went wrong
+```
+
+---
+
+# 45. Challenge — Search Users
+
+Fetch users from:
+
+```text
+https://jsonplaceholder.typicode.com/users
+```
+
+Create:
+
+```text
+Search User [________________]
+```
+
+Display users based on the search text.
+
+Example:
+
+```text
+Search: Leanne
+Leanne Graham
+```
+
+Use:
+
+- useState
+- useEffect
+- API
+- map()
+- input
+- filter()
+
+---
+
+# 46. Challenge — Product Page
+
+Create a simple product page using:
+
+```text
+https://fakestoreapi.com/products
+```
+
+Display all products as cards.
+
+Each card should contain:
+
+```text
+Image
+Title
+Price
+Category
+[View Product]
+```
+
+---
+
+# 47. Final Challenge
+
+Create a small Product App.
+
+Requirements:
+
+### API
+
+Use:
+
+```text
+https://fakestoreapi.com/products
+```
+
+### Features
+
+- Fetch products
+- Display products
+- Loading message
+- Error message
+- Product cards
+- Search products
+- Add to Cart button
+- Conditional rendering for Add / Added
+
+### Expected UI
+
+```text
+--------------------------------------------
+Product Store
+Search: [________________________]
+--------------------------------------------
+Product 1
+Image
+Title
+Price
+[Add to Cart]
+
+Product 2
+Image
+Title
+Price
+[Added ✓]
+
+Product 3
+Image
+Title
+Price
+[Add to Cart]
+--------------------------------------------
+```
+
+---
+
+# 48. Practice — Small To-Do App
 
 Create a mini to-do app with:
 
@@ -532,7 +871,7 @@ Create a mini to-do app with:
 
 ---
 
-# 36. Practice — Signup Form
+# 49. Practice — Signup Form
 
 Create a signup form with:
 
@@ -548,7 +887,7 @@ Validate whether both passwords match.
 
 ---
 
-# 37. Practice — Age Calculator
+# 50. Practice — Age Calculator
 
 Create a form where user enters birth year.
 
@@ -556,7 +895,7 @@ Display the calculated age.
 
 ---
 
-# 38. Practice — Currency Converter
+# 51. Practice — Currency Converter
 
 Convert one currency to another.
 
@@ -570,13 +909,13 @@ Display the converted value.
 
 ---
 
-# 39. Practice — Color Picker
+# 52. Practice — Color Picker
 
 Create color buttons and show the selected color preview.
 
 ---
 
-# 40. Practice — Notification Banner
+# 53. Practice — Notification Banner
 
 Create a button that shows a notification message like:
 
@@ -588,7 +927,7 @@ Use a state variable to display or hide it.
 
 ---
 
-# 41. Practice — Review Form
+# 54. Practice — Review Form
 
 Create a review form with:
 
@@ -603,7 +942,7 @@ Show submitted review in a card format.
 
 ---
 
-# 42. Practice — Bookmarks App
+# 55. Practice — Bookmarks App
 
 Create a bookmark button for a website.
 
@@ -615,7 +954,7 @@ Bookmarked
 
 ---
 
-# 43. Practice — Time Tracker
+# 56. Practice — Time Tracker
 
 Create a button to start and stop a timer.
 
@@ -623,7 +962,7 @@ Display elapsed time in seconds.
 
 ---
 
-# 44. Practice — Live Search Box
+# 57. Practice — Live Search Box
 
 Create a list of names and a search field.
 
@@ -631,7 +970,7 @@ As the user types, results update instantly.
 
 ---
 
-# 45. Practice — Questions Bank
+# 58. Practice — Questions Bank
 
 Create a set of 5 questions.
 
