@@ -521,6 +521,8 @@ Display the converted value.
 
 ---
 
+# Practice Questions for useEffect
+
 # 35. Practice — Counter + useEffect
 
 Create a counter:
