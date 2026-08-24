@@ -1,6 +1,3 @@
-# React Notes
-
----
 
 # Introduction to React
 
@@ -680,6 +677,22 @@ After API response:
 ```jsx
 setLoading(false);
 ```
+
+Usually, loading is set to `true` before the request and `false` after the
+request finishes.
+
+```jsx
+useEffect(() => {
+	setLoading(true);
+
+	fetch("https://jsonplaceholder.typicode.com/users")
+		.then((response) => response.json())
+		.then((data) => setUsers(data))
+		.finally(() => setLoading(false));
+}, []);
+```
+
+While `loading` is `true`, we can show a loading UI instead of the data list.
 ---
 
 # 52. Error Handling
@@ -687,6 +700,72 @@ setLoading(false);
 We can maintain an error state.
 ```jsx
 const [error, setError] = useState("");
+```
+
+With `fetch`, network errors reject the Promise, but HTTP errors such as 404
+or 500 do not automatically reject it. We should check `response.ok` manually.
+
+```jsx
+fetch("https://example.com/users")
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error("Unable to fetch users");
+		}
+
+		return response.json();
+	})
+	.catch((requestError) => {
+		setError(requestError.message);
+	});
+```
+
+### Loading, Error, and Success States
+
+An API-driven component commonly has three UI states:
+
+- Loading state: the request is in progress.
+- Error state: the request failed.
+- Success state: the data was received.
+
+```jsx
+if (loading) {
+	return <p>Loading users...</p>;
+}
+
+if (error) {
+	return <p>{error}</p>;
+}
+
+return <UsersList users={users} />;
+```
+
+For a complete request flow, `try` handles the request, `catch` handles the
+error, and `finally` runs whether the request succeeds or fails.
+
+```jsx
+async function loadUsers() {
+	try {
+		setLoading(true);
+		setError("");
+
+		const response = await fetch("https://example.com/users");
+		if (!response.ok) {
+			throw new Error("Failed to load users");
+		}
+
+		setUsers(await response.json());
+	} catch (requestError) {
+		setError(requestError.message);
+	} finally {
+		setLoading(false);
+	}
+}
+```
+
+The same `loadUsers` function can be called again from a Retry button:
+
+```jsx
+{error && <button onClick={loadUsers}>Retry</button>}
 ```
 ---
 
@@ -768,5 +847,417 @@ export default App;
 | Convert response | Need `response.json()` | Data is available in `response.data` |
 | Error handling | HTTP errors need to be checked manually | HTTP errors are automatically rejected |
 | Syntax | Uses Promise-based syntax | Uses Promise-based syntax |
+
+# React Notes
+
+---
+
+# 57. What is Routing?
+
+Routing means showing different UI components for different URL paths.
+
+- `/` can show the Home page.
+- `/about` can show the About page.
+- `/products` can show the Products page.
+- Routing helps create multiple pages in a single-page application (SPA).
+- In an SPA, the complete browser page does not reload for every route change.
+
+---
+
+# 58. React Router
+
+React Router is a library used to manage routing in React applications.
+
+Install it:
+
+```bash
+npm install react-router-dom
+```
+
+Common imports:
+
+```jsx
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+```
+
+`BrowserRouter` provides routing functionality to the application.
+`Routes` contains route definitions, and `Route` connects a URL path with a component.
+
+---
+
+# 59. Basic Routes
+
+```jsx
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+function Home() {
+	return <h1>Home Page</h1>;
+}
+
+function About() {
+	return <h1>About Page</h1>;
+}
+
+function App() {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/about" element={<About />} />
+			</Routes>
+		</BrowserRouter>
+	);
+}
+
+export default App;
+```
+
+Here, the `element` property tells React which component to render for a path.
+
+---
+
+# 60. Link and Navigation
+
+`Link` is used to move between routes without refreshing the browser page.
+
+```jsx
+import { Link } from "react-router-dom";
+
+function Navbar() {
+	return (
+		<nav>
+			<Link to="/">Home</Link>
+			<Link to="/about">About</Link>
+			<Link to="/products">Products</Link>
+		</nav>
+	);
+}
+```
+
+- `to` contains the target path.
+- `Link` is preferred over a normal `<a>` tag for internal React routes.
+- A normal `<a>` tag can reload the complete application.
+
+---
+
+# 61. useNavigate
+
+`useNavigate` is a hook used to navigate through JavaScript logic.
+It is useful after a form submission, login, logout, or button click.
+
+```jsx
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+	const navigate = useNavigate();
+
+	function handleLogin() {
+		navigate("/dashboard");
+	}
+
+	return <button onClick={handleLogin}>Login</button>;
+}
+```
+
+Useful examples:
+
+```jsx
+navigate("/products");
+navigate(-1); // Go back to the previous page
+navigate("/login", { replace: true }); // Replace current history entry
+```
+
+---
+
+# 62. Dynamic Routes and useParams
+
+A dynamic route contains a variable path segment, such as `/products/:id`.
+The `useParams` hook reads that value.
+
+```jsx
+import { Route, Routes, useParams } from "react-router-dom";
+
+function ProductDetails() {
+	const { id } = useParams();
+
+	return <h1>Product ID: {id}</h1>;
+}
+
+function AppRoutes() {
+	return (
+		<Routes>
+			<Route path="/products/:id" element={<ProductDetails />} />
+		</Routes>
+	);
+}
+```
+
+When the URL is `/products/25`, then `id` will be `"25"`.
+Route parameters are strings, so numeric operations may require conversion.
+
+```jsx
+const productId = Number(id);
+```
+
+---
+
+# 63. Nested Routes and Outlet
+
+Nested routes are routes inside a parent route.
+`Outlet` renders the child route inside the parent component.
+
+```jsx
+import { Outlet, Route, Routes } from "react-router-dom";
+
+function DashboardLayout() {
+	return (
+		<div>
+			<h1>Dashboard</h1>
+			<Outlet />
+		</div>
+	);
+}
+
+function AppRoutes() {
+	return (
+		<Routes>
+			<Route path="/dashboard" element={<DashboardLayout />}>
+				<Route index element={<h2>Dashboard Home</h2>} />
+				<Route path="profile" element={<h2>Profile</h2>} />
+			</Route>
+		</Routes>
+	);
+}
+```
+
+`/dashboard/profile` renders `Profile` inside `DashboardLayout`.
+
+---
+
+# 64. 404 Route
+
+The wildcard path `*` can display a page when no route matches.
+
+```jsx
+<Route path="*" element={<h1>Page Not Found</h1>} />
+```
+
+The wildcard route should generally be placed after the specific routes.
+
+---
+
+# 65. Conditional Routing
+
+Conditional routing means showing or redirecting users based on a condition,
+such as login status or user role.
+
+```jsx
+function App() {
+	const isLoggedIn = true;
+
+	return isLoggedIn ? <Dashboard /> : <Login />;
+}
+```
+
+For route-based redirection, React Router provides `Navigate`.
+
+```jsx
+import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ isLoggedIn, children }) {
+	if (!isLoggedIn) {
+		return <Navigate to="/login" replace />;
+	}
+
+	return children;
+}
+```
+
+Usage:
+
+```jsx
+<Route
+	path="/dashboard"
+	element={
+		<ProtectedRoute isLoggedIn={isLoggedIn}>
+			<Dashboard />
+		</ProtectedRoute>
+	}
+/>
+```
+
+---
+
+# 66. What is Storage?
+
+Browser storage allows an application to save small amounts of data in the browser.
+
+### localStorage
+
+- Data remains after closing and reopening the browser.
+- Data is stored as key-value pairs.
+- Values are stored as strings.
+
+```jsx
+localStorage.setItem("theme", "dark");
+const theme = localStorage.getItem("theme");
+localStorage.removeItem("theme");
+localStorage.clear();
+```
+
+### sessionStorage
+
+- It has the same basic API as `localStorage`.
+- Data usually remains only for the current browser tab session.
+
+```jsx
+sessionStorage.setItem("step", "2");
+const step = sessionStorage.getItem("step");
+```
+
+---
+
+# 67. Store Objects in localStorage
+
+`localStorage` cannot directly store objects or arrays.
+Use `JSON.stringify()` while saving and `JSON.parse()` while reading.
+
+```jsx
+const user = { id: 1, name: "Aman" };
+
+localStorage.setItem("user", JSON.stringify(user));
+
+const savedUser = JSON.parse(localStorage.getItem("user"));
+console.log(savedUser.name);
+```
+
+If a key may not exist, handle the `null` value before parsing.
+
+```jsx
+const savedUser = JSON.parse(localStorage.getItem("user") || "null");
+```
+
+---
+
+# 68. Authentication vs Authorization
+
+### Authentication
+
+Authentication answers:
+
+> Who are you?
+
+Examples:
+
+- Login using email and password.
+- Verify an OTP.
+- Sign in with Google.
+
+### Authorization
+
+Authorization answers:
+
+> What are you allowed to access or do?
+
+Examples:
+
+- An admin can delete users.
+- A normal user can view their own profile.
+- Only paid users can open a premium page.
+
+### Easy memory trick
+
+- Authentication = identity check.
+- Authorization = permission check.
+
+Authentication normally happens before authorization.
+
+---
+
+# 69. Basic Authentication Flow
+
+```text
+User enters credentials
+	↓
+Frontend sends credentials to the server
+	↓
+Server verifies the user
+	↓
+Server returns a session or token
+	↓
+Frontend stores the login state
+	↓
+Protected routes become accessible
+```
+
+The real credential verification must happen on the server.
+Frontend-only authentication is not secure because frontend code can be inspected or modified.
+
+---
+
+# 70. Login State with Storage
+
+```jsx
+import { useState } from "react";
+
+function Login() {
+	const [isLoggedIn, setIsLoggedIn] = useState(
+		Boolean(localStorage.getItem("token"))
+	);
+
+	function handleLogin() {
+		localStorage.setItem("token", "example-token");
+		setIsLoggedIn(true);
+	}
+
+	function handleLogout() {
+		localStorage.removeItem("token");
+		setIsLoggedIn(false);
+	}
+
+	return isLoggedIn ? (
+		<button onClick={handleLogout}>Logout</button>
+	) : (
+		<button onClick={handleLogin}>Login</button>
+	);
+}
+```
+
+In a real application, the token should come from the server after successful login.
+
+---
+
+# 71. Role-Based Authorization
+
+```jsx
+function AdminRoute({ user, children }) {
+	if (!user) {
+		return <Navigate to="/login" replace />;
+	}
+
+	if (user.role !== "admin") {
+		return <Navigate to="/forbidden" replace />;
+	}
+
+	return children;
+}
+```
+
+- No user means the user is not authenticated.
+- A logged-in user with the wrong role is authenticated but not authorized.
+- The server must also check permissions; hiding a frontend route is not enough.
+
+---
+
+# 72. Important Routing and Auth Points
+
+- Use `Link` for normal internal navigation.
+- Use `useNavigate` after an action or inside JavaScript logic.
+- Use `useParams` to read dynamic URL values.
+- Use `Navigate` to redirect users conditionally.
+- Use `localStorage` for non-sensitive preferences and simple persistence.
+- Do not treat `localStorage` as a secure place for passwords or highly sensitive data.
+- Authentication identifies a user; authorization checks permissions.
+- Always enforce important authorization rules on the backend as well.
 
 ---
