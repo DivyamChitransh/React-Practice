@@ -1261,3 +1261,105 @@ function AdminRoute({ user, children }) {
 - Always enforce important authorization rules on the backend as well.
 
 ---
+
+# 73. What is Lifting State Up?
+
+Lifting state up means moving shared state from child components to their
+closest common parent.
+
+- The parent owns the state.
+- The parent passes the value to children using props.
+- The parent passes handler functions so children can request updates.
+- This keeps one source of truth for shared data.
+
+---
+
+# 74. Lifting State Up Example
+
+Suppose two child components need the same temperature value. Store the value
+in their common parent and pass it through props. The child sends changes back
+through a callback prop.
+
+Data flow: Parent state → Child props → Parent state update.
+
+---
+
+# 75. When Should We Lift State Up?
+
+Lift state up when:
+
+- Two or more components need the same data.
+- One child needs to update data displayed by another child.
+- A parent needs to control a child component.
+- Duplicate state is causing inconsistent UI.
+
+Do not lift every state to the top of the application. Keep state local when
+only one component needs it.
+
+---
+
+# 76. What is Batching?
+
+Batching means React groups multiple state updates into one re-render.
+This improves performance by reducing unnecessary renders.
+
+React normally batches these updates and renders the component once after the
+event handler finishes.
+
+In modern React, updates inside event handlers, Promises, timers, and other
+asynchronous code are also automatically batched in most cases.
+
+---
+
+# 77. Batching and Functional Updates
+
+When multiple updates depend on the previous state, use the functional update
+form.
+
+- Use `setCount((previousCount) => previousCount + 1)` when the next value
+  depends on the previous value.
+- Two functional updates are processed correctly in sequence.
+- Direct repeated updates may read the same old state value.
+
+Use functional updates whenever the next state depends on the previous state.
+
+---
+
+# 78. What is a Controlled Component?
+
+A controlled component is a form element whose value is controlled by React
+state. It uses `value` and `onChange`.
+
+- React state is the single source of truth.
+- The input uses `value` and `onChange`.
+- Validation and live UI updates are easy.
+- The current value is always available in React state.
+
+---
+
+# 79. What is an Uncontrolled Component?
+
+An uncontrolled component stores its current form value in the DOM instead of
+React state. We can read the value using a ref when required.
+
+- The DOM is the source of truth.
+- `defaultValue` sets the initial value.
+- `useRef` reads the value when needed.
+- It is useful for simple forms or integrating non-React libraries.
+
+---
+
+# 80. Controlled vs Uncontrolled Components
+
+| Controlled | Uncontrolled |
+|---|---|
+| Value is stored in React state | Value is stored in the DOM |
+| Uses `value` and `onChange` | Uses `defaultValue` and `ref` |
+| Easy validation and live updates | Read value mainly on submit or demand |
+| More code and explicit control | Less code and simpler setup |
+| Common for dynamic forms | Useful for simple forms and file inputs |
+
+For most interactive forms, controlled components are easier to validate and
+keep synchronized with the UI.
+
+---

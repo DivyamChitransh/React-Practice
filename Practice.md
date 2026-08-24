@@ -1241,6 +1241,209 @@ Requirements:
 
 ---
 
+# 74. Practice — Shared Counter State
+
+Create a parent component with two child components:
+
+```text
+Counter Display
+Counter Buttons
+```
+
+Requirements:
+
+- Store the count in the parent component.
+- Pass the count to `CounterDisplay` using props.
+- Pass the update function to `CounterButtons`.
+- Both children should use the same count.
+
+---
+
+# 75. Practice — Shared Input State
+
+Create a form with an input component and a preview component.
+
+Requirements:
+
+- Keep the input value in the common parent.
+- Pass the value to the preview component.
+- Display the typed text immediately in the preview.
+- Use a callback prop to update the parent state.
+
+---
+
+# 76. Practice — Temperature Calculator
+
+Create Celsius and Fahrenheit input components.
+
+Requirements:
+
+- Keep the temperature state in the parent component.
+- Lift the shared state up from the input components.
+- Update the converted value when either input changes.
+- Do not maintain duplicate independent state in both inputs.
+
+---
+
+# 77. Practice — Sibling Components Communication
+
+Create two sibling components:
+
+```text
+Product List
+Cart Summary
+```
+
+Requirements:
+
+- Store the cart items in their common parent.
+- Product List should add products to the cart.
+- Cart Summary should display the cart count.
+- Pass data and handler functions through props.
+
+---
+
+# 78. Practice — Batching Multiple Updates
+
+Create a button that updates these states together:
+
+```text
+Name
+Age
+City
+```
+
+Requirements:
+
+- Update all three states inside one event handler.
+- Observe the result after the click.
+- Understand that React batches the updates into one re-render.
+
+---
+
+# 79. Practice — Counter with Functional Updates
+
+Create a button named:
+
+```text
+Increase by 3
+```
+
+Requirements:
+
+- The button should call the count setter three times.
+- Use functional updates based on the previous count.
+- The count should increase by exactly 3 on every click.
+
+---
+
+# 80. Practice — Batching with Async Updates
+
+Create a button that updates a message and a loading state inside a Promise or
+`setTimeout`.
+
+Requirements:
+
+- Set loading to `true` before the async work.
+- Set the message after the async work completes.
+- Set loading to `false` at the end.
+- Observe how modern React batches these updates.
+
+---
+
+# 81. Practice — Controlled Text Input
+
+Create a controlled input:
+
+```text
+Name: [____________]
+Typed value: ________
+```
+
+Requirements:
+
+- Store the input value in state.
+- Use `value` and `onChange`.
+- Display the value while typing.
+- Add a Clear button.
+
+---
+
+# 82. Practice — Controlled Login Form
+
+Create a controlled login form with:
+
+```text
+Email
+Password
+[Login]
+```
+
+Requirements:
+
+- Store both fields in state.
+- Prevent the default form submission.
+- Show an error if either field is empty.
+- Display the submitted email after valid submission.
+
+---
+
+# 83. Practice — Controlled Form Validation
+
+Create a registration form with:
+
+```text
+Name
+Email
+Age
+```
+
+Requirements:
+
+- Use controlled inputs.
+- Show validation messages while typing or after submit.
+- Name and email should be required.
+- Age should be greater than 18.
+
+---
+
+# 84. Practice — Uncontrolled Form with useRef
+
+Create a form with:
+
+```text
+Name
+City
+[Submit]
+```
+
+Requirements:
+
+- Do not store input values in state.
+- Use `useRef` to read the values on submit.
+- Prevent the default form submission.
+- Display the submitted values below the form.
+
+---
+
+# 85. Practice — Controlled vs Uncontrolled Form
+
+Create two small forms on the same page:
+
+```text
+Controlled Form
+Uncontrolled Form
+```
+
+Requirements:
+
+- Use state, `value`, and `onChange` in the controlled form.
+- Use `useRef` and `defaultValue` in the uncontrolled form.
+- Submit both forms and display their values.
+- Write a short note explaining which form is easier to validate and why.
+
+---
+
 # Final Note
 
-These practice questions are designed to help students revise React topics with real implementation using components, props, events, forms, state, routing, API states, storage, and authentication.
+These practice questions are designed to help students revise React topics with real implementation using components, props, events, forms, state, routing, API states, storage, authentication, state lifting, batching, and controlled and uncontrolled components.
