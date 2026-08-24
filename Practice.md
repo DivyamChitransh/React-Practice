@@ -982,6 +982,265 @@ Display the final score.
 
 ---
 
+# 59. Practice — Basic Routes
+
+Create a React Router application with these pages:
+
+```text
+/
+/about
+/contact
+```
+
+Display a different heading on each page.
+
+Use:
+
+- `BrowserRouter`
+- `Routes`
+- `Route`
+
+---
+
+# 60. Practice — Navbar Navigation
+
+Create a navbar with links for:
+
+```text
+Home | About | Products | Contact
+```
+
+Requirements:
+
+- Use `Link` for navigation.
+- Do not reload the browser page while changing routes.
+- Show the active page content below the navbar.
+
+---
+
+# 61. Practice — Navigate after Login
+
+Create a login page with:
+
+```text
+Email: [____________]
+Password: [____________]
+[Login]
+```
+
+After clicking Login, navigate to `/dashboard` using `useNavigate`.
+
+---
+
+# 62. Practice — Product Details with useParams
+
+Create product routes using this pattern:
+
+```text
+/products/:id
+```
+
+Display the product ID from the URL using `useParams`.
+
+Example:
+
+```text
+/products/12  →  Product ID: 12
+```
+
+---
+
+# 63. Practice — Product List to Details
+
+Create a product list with at least 4 products.
+
+Requirements:
+
+- Each product should have a `View Details` link.
+- The link should open `/products/:id`.
+- Use `useParams` to display the selected product.
+
+---
+
+# 64. Practice — 404 Not Found Page
+
+Create a Not Found page for an unknown route.
+
+Requirements:
+
+- Use the wildcard route `*`.
+- Display:
+
+```text
+404 - Page Not Found
+```
+
+- Add a link to return to the Home page.
+
+---
+
+# 65. Practice — Loading State
+
+Fetch users from:
+
+```text
+https://jsonplaceholder.typicode.com/users
+```
+
+Requirements:
+
+- Show `Loading users...` while the request is running.
+- Show the users after a successful response.
+- Use `useState` and `useEffect`.
+
+---
+
+# 66. Practice — Error State
+
+Create an API component that handles a failed request.
+
+Requirements:
+
+- Store the error message in an `error` state.
+- Check `response.ok` before reading the response.
+- Display:
+
+```text
+Something went wrong
+```
+
+when the request fails.
+
+---
+
+# 67. Practice — Loading, Error, and Success UI
+
+Create a user list with these three states:
+
+```text
+Loading users...
+Something went wrong [Retry]
+Users list
+```
+
+Requirements:
+
+- Use `loading`, `error`, and `users` state.
+- Use `try/catch/finally`.
+- The Retry button should call the API again.
+
+---
+
+# 68. Practice — Save Theme in localStorage
+
+Create a Light/Dark theme toggle.
+
+Requirements:
+
+- Save the selected theme in `localStorage`.
+- Read the saved theme when the application loads.
+- Keep the selected theme after refreshing the page.
+
+---
+
+# 69. Practice — Save User Object in Storage
+
+Create a small profile form with:
+
+```text
+Name
+City
+[Save]
+```
+
+Requirements:
+
+- Save the user object using `JSON.stringify()`.
+- Read it using `JSON.parse()`.
+- Display the saved profile after refreshing the page.
+
+---
+
+# 70. Practice — Conditional Login Route
+
+Create these routes:
+
+```text
+/login
+/dashboard
+```
+
+Requirements:
+
+- Show Login when the user is logged out.
+- Show Dashboard when the user is logged in.
+- Use `Navigate` to redirect an unauthenticated user to `/login`.
+
+---
+
+# 71. Practice — Protected Profile Route
+
+Create a protected `/profile` route.
+
+Requirements:
+
+- Store a demo login token in `localStorage`.
+- Allow the profile page only when the token exists.
+- Remove the token on Logout.
+- Redirect to `/login` after logout.
+
+---
+
+# 72. Practice — Authentication and Authorization
+
+Create a login flow for two users:
+
+```text
+Aman  → user
+Rahul → admin
+```
+
+Create these routes:
+
+```text
+/dashboard
+/admin
+```
+
+Requirements:
+
+- Both logged-in users can open `/dashboard`.
+- Only the admin can open `/admin`.
+- Redirect a logged-out user to `/login`.
+- Redirect a normal user to `/forbidden`.
+
+---
+
+# 73. Practice — Complete Auth Router
+
+Build a small application with:
+
+```text
+/login
+/dashboard
+/products/:id
+/admin
+/forbidden
+```
+
+Requirements:
+
+- Use `Link` for navbar navigation.
+- Use `useNavigate` after login and logout.
+- Use `useParams` for product details.
+- Use loading and error states while fetching products.
+- Persist login state in storage.
+- Protect dashboard and product routes.
+- Allow only admins to open the admin route.
+- Add a logout button and a wildcard 404 route.
+
+---
+
 # Final Note
 
-These practice questions are designed to help students revise React topics with real implementation using components, props, events, forms, state, and UI updates.
+These practice questions are designed to help students revise React topics with real implementation using components, props, events, forms, state, routing, API states, storage, and authentication.
